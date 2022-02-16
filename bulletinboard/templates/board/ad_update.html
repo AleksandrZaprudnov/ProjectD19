@@ -1,0 +1,62 @@
+{% extends 'board/board.html' %}
+
+{% block adcontent %}
+<!-- Post content-->
+<article>
+    <!-- Post header-->
+    <header class="mb-4">
+        <!-- Post title-->
+        <h1 class="fw-bolder mb-1">Редактор публикации</h1>
+        <!-- Post meta content-->
+        <div class="text-muted fst-italic mb-2">Сегодня {% now "j F Y" %}</div>
+    </header>
+    <section class="mb-5">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Сохранить">
+        </form>
+    </section>
+</article>
+{% endblock adcontent %}
+
+{% block comments %}
+{% endblock comments %}
+
+{% block sidewidgets %}
+<!-- Side widgets-->
+<div class="col-lg-4">
+    <!-- Side widget-->
+    <div class="card mb-4">
+        <div class="card-header">Отклики на Ваше объявление</div>
+        <div class="card-body">
+            {% if resps %}
+                {% for resp in resps %}
+                    <div class="card mb-4">
+                        <div class="card-header">Отклики</div>
+                        <div class="card-body">
+                            <section class="mb-5">
+                                <p class="fs-5 mb-4">{{ resp.text_response }}</p>
+                            </section>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="#!">Принять</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="#!">Отклонить</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="text-muted fst-italic mb-2">Пока никто не откликнулся</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock sidewidgets %}

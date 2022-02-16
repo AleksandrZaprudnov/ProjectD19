@@ -1,0 +1,55 @@
+{% extends 'board/board.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block adcontent %}
+    {% if ads %}
+        <header class="mb-4">
+            <!-- Board title-->
+            <h1 class="fw-bolder mb-1">Лента объявлений и новостей</h1>
+        </header>
+        {% for ad in ads %}
+        <!-- Ad content-->
+        <article>
+            <!-- Ad header-->
+            <header class="mb-4">
+                <!-- Ad title-->
+                <h1 class="fw-bolder mb-1"> <a href="{% url 'ad_detail' ad.id %}">{{ ad.title }} </a></h1>
+                <!-- Ad meta content-->
+                <div class="text-muted fst-italic mb-2">Дата публикации: {{ ad.datetime_created|date:'d-m-y H:m' }}</div>
+            </header>
+            <!-- Preview image figure-->
+<!--            <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>-->
+            <!-- Ad content-->
+            <section class="mb-5">
+                <p class="fs-5 mb-4">{{ ad.text_article|truncatechars:300 }}</p>
+            </section>
+        </article>
+        {% endfor %}
+        <footer class="py-5 bg-white">
+            <div class="container">
+               {% if user.is_authenticated %}
+                    <a class="navbar-brand" href="{% url 'ad_create' %}">Опубликовать объявление или новость</a>
+               {% else %}
+                    <a class="navbar-brand" href="{% provider_login_url 'google' %}">Сначала зарегистрируйтесь, используя аккаунт Google, без регистрации доступен только просмотр</a>
+               {% endif %}
+            </div>
+        </footer>
+    {% else %}
+        <footer class="py-5 bg-white">
+            <div class="container">
+               {% if user.is_authenticated %}
+                    <a class="navbar-brand" href="{% url 'ad_create' %}">Нет публикаций, можно опубликовать объявление или новость</a>
+               {% else %}
+                    <a class="navbar-brand" href="{% provider_login_url 'google' %}">Сначала зарегистрируйтесь, используя аккаунт Google, без регистрации доступен только просмотр</a>
+               {% endif %}
+            </div>
+        </footer>
+    {% endif %}
+{% endblock adcontent %}
+
+{% block comments %}
+{% endblock comments %}
+
+{% block sidewidgets %}
+{% endblock sidewidgets %}

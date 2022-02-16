@@ -1,0 +1,76 @@
+{% extends 'board/board.html' %}
+
+{% block adcontent %}
+<!-- Post content-->
+<article>
+    <!-- Ad content-->
+    <article>
+        <!-- Ad header-->
+        <header class="mb-4">
+            <!-- Ad title-->
+            <h1 class="fw-bolder mb-1">{{ ad.title }}</h1>
+            <!-- Ad meta content-->
+            <div class="text-muted fst-italic mb-2">Дата публикации: {{ ad.datetime_created|date:'d-m-y H:m' }}</div>
+        </header>
+        <!-- Preview image figure-->
+            <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
+        <!-- Ad content-->
+        <section class="mb-5">
+            <p class="fs-5 mb-4">{{ ad.text_article }}</p>
+        </section>
+    </article>
+</article>
+{% endblock adcontent %}
+
+{% block comments %}
+<!-- Comments section-->
+<section class="mb-5">
+    <div class="card bg-light">
+        <div class="card-body">
+            <!-- Comment form-->
+            <form class="mb-4" method="POST">
+                {% csrf_token %}
+                <textarea class="form-control" rows="3" placeholder="Оставьте отклик на объявление...">{% if form.text_response %}{{ form.text_response }}{% endif %}</textarea>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="submit" value="Отправить">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<section class="mb-5">
+    {% if user.is_authenticated %}
+<!--       <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'ad_detail' ad.id %}">Откликнуться</a></li>-->
+       <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'ad_update' ad.id %}">Редактор объявления</a></li>
+    {% endif %}
+    <li class="nav-item"><a class="nav-link" aria-current="page" href="/board/">Доска</a></li>
+</section>
+{% endblock comments %}
+
+{% block sidewidgets %}
+<!-- Side widgets-->
+<div class="col-lg-4">
+    <!-- Side widget-->
+    <div class="card mb-4">
+        <div class="card-header">Отклики на объявление</div>
+        <div class="card-body">
+            {% if resps %}
+                {% for resp in resps %}
+                    <div class="card mb-4">
+                        <div class="card-header">{{ resp.user }}</div>
+                        <div class="card-body">
+                            <section class="mb-5">
+                                <p class="fs-5 mb-4">{{ resp.text_response }}</p>
+                            </section>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="text-muted fst-italic mb-2">Пока никто не откликнулся</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock sidewidgets %}

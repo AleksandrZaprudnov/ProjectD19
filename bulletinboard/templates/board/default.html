@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        {% load static %}
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Доска объявлений</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Responsive navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#!">Доска объявлений</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#">Главная</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">О нас</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">Контакты</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Доска</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Page content-->
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Post content-->
+                    <article>
+                        <!-- Post header-->
+                        <header class="mb-4">
+                            <!-- Post title-->
+                            <h1 class="fw-bolder mb-1">Добро пожаловать на доску объявлений!</h1>
+                            <!-- Post meta content-->
+                            <div class="text-muted fst-italic mb-2">Опубликовано Feb 1, 2022</div>
+                            <!-- Post categories-->
+                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Веб дизайн</a>
+                            <a class="badge bg-secondary text-decoration-none link-light" href="#!">Халява</a>
+                        </header>
+                        <!-- Preview image figure-->
+                        <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
+                        <!-- Post content-->
+                        <section class="mb-5">
+                            <p class="fs-5 mb-4">Наука - это предприятие, которое следует ценить как деятельность свободного человеческого разума. Потому что это меняет то, кто мы есть, как мы живем, и это дает нам понимание нашего места во Вселенной.</p>
+                            <p class="fs-5 mb-4">Вселенная велика и стара, и ингредиенты для жизни, какой мы ее знаем, есть повсюду, так что нет причин думать, что Земля была бы уникальной в этом отношении. Стала ли жизнь разумной или нет - это другой вопрос, и мы посмотрим, найдем ли мы это.</p>
+                            <p class="fs-5 mb-4">Если вы получаете астероиды размером около километра, они достаточно велики и несут достаточно энергии в нашу систему, чтобы нарушить транспорт, связь, пищевые цепочки, и это может быть действительно плохим днем на Земле.</p>
+                            <h2 class="fw-bolder mb-4 mt-5">У меня каждый день возникают странные космические мысли</h2>
+                            <p class="fs-5 mb-4">Для меня самый увлекательный интерфейс - это Твиттер. Каждый день у меня возникают странные космические мысли, и я понял, что могу держать их при себе или делиться ими с людьми, которым это может быть интересно.</p>
+                            <p class="fs-5 mb-4">Венера обладает безудержным парниковым эффектом. Я вроде как хочу знать, что там произошло, потому что мы крутим ручки здесь, на Земле, не зная о последствиях этого. На Марсе когда-то была проточная вода. Сегодня здесь сухо до костей. Там тоже случилось что-то плохое.</p>
+                        </section>
+                    </article>
+                    <!-- Comments section-->
+                    <section class="mb-5">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <!-- Comment form-->
+                                <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Присоединяйтесь к обсуждению и оставьте комментарий!"></textarea></form>
+                                <!-- Comment with nested comments-->
+                                <div class="d-flex mb-4">
+                                    <!-- Parent comment-->
+                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                    <div class="ms-3">
+                                        <div class="fw-bold">- Имя комментатора -</div>
+                                        If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
+                                        <!-- Child comment 1-->
+                                        <div class="d-flex mt-4">
+                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                            <div class="ms-3">
+                                                <div class="fw-bold">- Имя комментатора -</div>
+                                                And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
+                                            </div>
+                                        </div>
+                                        <!-- Child comment 2-->
+                                        <div class="d-flex mt-4">
+                                            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                            <div class="ms-3">
+                                                <div class="fw-bold">- Имя комментатора -</div>
+                                                When you put money directly to a problem, it makes a good headline.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Single comment-->
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                                    <div class="ms-3">
+                                        <div class="fw-bold">- Имя комментатора -</div>
+                                        Когда я смотрю на вселенную и на все способы, которыми вселенная хочет нас убить, мне трудно примирить это с заявлениями о благодеянии.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <!-- Side widgets-->
+                <div class="col-lg-4">
+                    <!-- Search widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Поиск</div>
+                        <div class="card-body">
+                            <div class="input-group">
+                                <input class="form-control" type="text" placeholder="Введите что-то для поиска..." aria-label="Введите что-то для поиска..." aria-describedby="button-search" />
+                                <button class="btn btn-primary" id="button-search" type="button">Готово!</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Categories widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Категори</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="#!">Веб дизайн</a></li>
+                                        <li><a href="#!">HTML</a></li>
+                                        <li><a href="#!">Халява</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="#!">JavaScript</a></li>
+                                        <li><a href="#!">CSS</a></li>
+                                        <li><a href="#!">Учебные пособия</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Side widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Боковой виджет (дополнительный)</div>
+                        <div class="card-body">Вы можете поместить все, что захотите, внутрь этих боковых виджетов. Они просты в использовании и оснащены компонентом Bootstrap 5 card!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+        </footer>
+    </body>
+</html>
