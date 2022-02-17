@@ -11,6 +11,7 @@
             <h1 class="fw-bolder mb-1">{{ ad.title }}</h1>
             <!-- Ad meta content-->
             <div class="text-muted fst-italic mb-2">Дата публикации: {{ ad.datetime_created|date:'d-m-y H:m' }}</div>
+            <div class="text-muted fst-italic mb-2">Автор: {{ ad.user }}</div>
         </header>
         <!-- Preview image figure-->
             <figure class="mb-4"><img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /></figure>
@@ -23,26 +24,27 @@
 {% endblock adcontent %}
 
 {% block comments %}
-<!-- Comments section-->
-<section class="mb-5">
-    <div class="card bg-light">
-        <div class="card-body">
-            <!-- Comment form-->
-            <form class="mb-4" method="POST">
-                {% csrf_token %}
-                <textarea class="form-control" rows="3" placeholder="Оставьте отклик на объявление...">{% if form.text_response %}{{ form.text_response }}{% endif %}</textarea>
-                <div class="card-body">
-                    <div class="input-group">
-                        <input type="submit" value="Отправить">
+{% if user.is_authenticated %}
+    <!-- Comments section-->
+    <section class="mb-5">
+        <div class="card bg-light">
+            <div class="card-body">
+                <!-- Comment form-->
+                <form class="mb-4" method="POST" action="{% url 'ad_detail' ad.pk %}">
+                    {% csrf_token %}
+                    {{ form }}
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="submit" value="Отправить">
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+{% endif %}
 <section class="mb-5">
-    {% if user.is_authenticated %}
-<!--       <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'ad_detail' ad.id %}">Откликнуться</a></li>-->
+    {% if author %}
        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'ad_update' ad.id %}">Редактор объявления</a></li>
     {% endif %}
     <li class="nav-item"><a class="nav-link" aria-current="page" href="/board/">Доска</a></li>
@@ -56,6 +58,7 @@
     <div class="card mb-4">
         <div class="card-header">Отклики на объявление</div>
         <div class="card-body">
+        {% if user.is_authenticated %}
             {% if resps %}
                 {% for resp in resps %}
                     <div class="card mb-4">
@@ -68,9 +71,12 @@
                     </div>
                 {% endfor %}
             {% else %}
-                <div class="text-muted fst-italic mb-2">Пока никто не откликнулся</div>
+                <div class="text-muted fst-italic mb-2">Нет сообщений</div>
             {% endif %}
         </div>
+        {% else %}
+            <div class="text-muted fst-italic mb-2">Доступно только зарегистированным</div>
+        {% endif %}
     </div>
 </div>
 {% endblock sidewidgets %}

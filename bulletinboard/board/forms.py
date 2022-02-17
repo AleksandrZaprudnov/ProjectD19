@@ -41,26 +41,32 @@ class AdModelUpdateForm(ModelForm):
 
 
 class RespOnAdModelCreateForm(ModelForm):
-    pass
-#
-#     class Meta:
-#         model = RespOnAd
-#         fields = '__all__'
-#         # exclude = [
-#         #     'ad', 'user',
-#         # ]
-#
-#     # Переопределяем инициализацию
-#     def __init__(self, ad, user, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.ad = ad
-#         self.user = user
-#
-#     def save(self, commit=True):
-#         self.instance.user = User.objects.filter(user_django=self.user).first()
-#         return super(AdModelCreateForm, self).save(commit=commit)
+
+    class Meta:
+        model = RespOnAd
+        fields = '__all__'
+        # exclude = [
+        #     'ad', 'user',
+        # ]
 
 
 class AdResponseForm(forms.Form):
-    text_response = forms.CharField(max_length=500, widget=forms.Textarea)
+    text_response = forms.CharField(
+        max_length=500,
+        label='',
+        widget=forms.Textarea
+    )
+
+    text_response.widget.attrs.update({
+        'class': 'form-control',
+        'rows': '3',
+        'placeholder': 'Оставьте отклик на объявление...',
+    })
+
+
+class RespOnAdModelDetailForm(ModelForm):
+
+    class Meta:
+        model = RespOnAd
+        fields = '__all__'
 

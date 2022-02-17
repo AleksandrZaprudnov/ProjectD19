@@ -17,11 +17,15 @@ app = Celery('bulletinboard')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
-app.conf.beat_schedule = {
-    'action_news_for_week_from_monday': {
-        'task': 'board.tasks.send_mail',
-        'schedule': crontab(),
-    },
-}
+# app.conf.beat_schedule = {
+#     'action_every_day': {
+#         'task': 'board.tasks.send_mail',
+#         'schedule': crontab(),
+#     },
+#     'action_news_for_week_from_monday': {
+#         'task': 'board.tasks.send_mail',
+#         'schedule': crontab(),
+#     },
+# }
 # 'schedule': crontab(minute=0, hour=8, day_of_week='monday'),
 

@@ -1,0 +1,26 @@
+{% extends 'board/board.html' %}
+
+{% block adcontent %}
+<!-- Post content-->
+<article xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    <!-- Post header-->
+    <header class="mb-4">
+        <!-- Post title-->
+        <h1 class="fw-bolder mb-1">Отклик будет удален безвозвратно!</h1>
+        <!-- Post meta content-->
+        <div class="text-muted fst-italic mb-2">Сегодня {% now "j F Y" %}</div>
+    </header>
+    <section class="mb-5">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Удалить">
+        </form>
+    </section>
+</article>
+{% endblock adcontent %}
+
+{% block comments %}
+{% endblock comments %}
+
+{% block sidewidgets %}
+{% endblock sidewidgets %}

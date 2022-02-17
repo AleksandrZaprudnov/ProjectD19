@@ -30,7 +30,11 @@
                         <li class="nav-item"><a class="nav-link" href="/pages/about/">О нас</a></li>
                         <li class="nav-item"><a class="nav-link" href="/pages/contacts/">Контакты</a></li>
                         {% if user.is_authenticated %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}">Выход ({{ user.socialaccount_set.all.0.extra_data.name }})</a></li>
+                            {% if user.socialaccount_set.all.0.extra_data.name %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}">Выход ({{ user.socialaccount_set.all.0.extra_data.name }})</a></li>
+                            {% else %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}">Выход ({{ user }})</a></li>
+                            {% endif %}
                         {% else %}
                             <li class="nav-item"><a class="nav-link" href="/accounts/google/login/?process=login">Вход</a></li>
                         {% endif %}
@@ -111,7 +115,7 @@
                         <div class="card-header">Поиск</div>
                         <div class="card-body">
                             <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Введите что-то для поиска..." aria-label="Введите что-то для поиска..." aria-describedby="button-search" />
+                                <input class="form-control" type="text" placeholder="Поиск пока не работает..." aria-label="Введите что-то для поиска..." aria-describedby="button-search" />
                                 <button class="btn btn-primary" id="button-search" type="button">Готово!</button>
                             </div>
                         </div>

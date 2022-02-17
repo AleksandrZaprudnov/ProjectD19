@@ -76,8 +76,8 @@ class RespOnAd(models.Model):
     def __str__(self):
         return f'{self.text_response[:15]}'
 
-    # def get_absolute_url(self):
-    #     return f'/ad/{self.ad.id}/RespOnAd_detail/{self.id}'
+    def get_absolute_url(self):
+        return f'/responad_detail/{self.id}'
 
 
 # Модель Ad
@@ -101,6 +101,9 @@ class Ad(models.Model):
     title = models.CharField(max_length=255, null=False)
     text_article = models.TextField(null=False)
 
+    def __str__(self):
+        return f'{self.title}'
+
     def get_absolute_url(self):
         return f'/board/ad_detail/{self.id}'
 
@@ -113,5 +116,4 @@ class Ad(models.Model):
 class AdCategory(models.Model):
     ads = models.ForeignKey("Ad", on_delete=models.CASCADE)
     categories = models.ForeignKey("Category", on_delete=models.CASCADE)
-
 

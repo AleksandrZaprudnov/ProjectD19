@@ -33,7 +33,7 @@
             {% if resps %}
                 {% for resp in resps %}
                     <div class="card mb-4">
-                        <div class="card-header">Отклики</div>
+                        <div class="card-header">{{ resp.user }}</div>
                         <div class="card-body">
                             <section class="mb-5">
                                 <p class="fs-5 mb-4">{{ resp.text_response }}</p>
@@ -41,12 +41,17 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">Принять</a></li>
+                                        <form class="mb-4" method="POST">
+                                            {% csrf_token %}
+                                            <li><a href="/responad_detail/{{ resp.id }}">Принять</a></li>
+                                        </form>
                                     </ul>
                                 </div>
                                 <div class="col-sm-6">
                                     <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">Отклонить</a></li>
+                                        <form class="mb-4" method="POST">
+                                            <li><a href="/responad_delete/{{ resp.id }}">Отклонить</a></li>
+                                        </form>
                                     </ul>
                                 </div>
                             </div>

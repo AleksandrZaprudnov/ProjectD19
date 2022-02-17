@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="ru">
+    <!-- Ad header-->
+    <header class="mb-4">
+        <!-- Ad title-->
+        <h1 class="fw-bolder mb-1">{{ text_title }}</h1>
+        <!-- Ad meta content-->
+        <div class="text-muted fst-italic mb-2">{{ date_time }}</div>
+    </header>
+    <!-- Ad content-->
+    <section class="mb-5">
+        <p class="fs-5 mb-4">{{ text_body }}</p>
+    </section>
+    <section class="mb-5">
+        <p class="fs-5 mb-4">Письмо сформировано автоматически, не отвечайте на него.</p>
+        <p class="fs-5 mb-4">Контакты для дальнейшего обсуждения:</p>
+        <p class="fs-5 mb-4">{{ text_contacts }}</p>
+    </section>
+</html>
