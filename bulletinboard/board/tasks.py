@@ -4,7 +4,7 @@ from django.core.mail import EmailMultiAlternatives
 
 # celery -A app_my worker -l INFO -B
 # Флаг B - периодические задачи
-@shared_task()
+@shared_task
 def send_mail(from_email, to_emails, subjects_email, html_content):
 
     msg = EmailMultiAlternatives(

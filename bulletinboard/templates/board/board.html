@@ -27,6 +27,9 @@
                         <li class="nav-item"><a class="nav-link" href="/admin/">Панель</a></li>
                         <li class="nav-item"><a class="nav-link" href="/home/">Главная</a></li>
                         <li class="nav-item"><a class="nav-link" aria-current="page" href="/board/">Доска</a></li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item"><a class="nav-link" href="/responad/">Отклики</a></li>
+                        {% endif %}
                         <li class="nav-item"><a class="nav-link" href="/pages/about/">О нас</a></li>
                         <li class="nav-item"><a class="nav-link" href="/pages/contacts/">Контакты</a></li>
                         {% if user.is_authenticated %}

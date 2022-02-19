@@ -1,0 +1,104 @@
+{% extends 'board/board.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block adcontent %}
+    {% if resps %}
+        <header class="mb-4">
+            <!-- Board title-->
+            <h1 class="fw-bolder mb-1">Лента откликов</h1>
+        </header>
+        {% for resp in resps %}
+        <!-- Ad content-->
+        <article>
+            <!-- Ad header-->
+            <header class="mb-4">
+                <!-- Ad title-->
+                <h1 class="fw-bolder mb-1"><a>{{ resp.title }}</a></h1>
+                <!-- Ad meta content-->
+                <hr>
+                <div class="text-muted fst-italic mb-2">Дата публикации: {{ resp.datetime_created|date:'d-m-y H:m' }}</div>
+                <div class="text-muted fst-italic mb-2">Написал: {{ resp.user }}</div>
+            </header>
+            <section class="mb-5">
+                <p class="fs-5 mb-4">{{ resp.text_response }}</p>
+            </section>
+        </article>
+        {% endfor %}
+        {% if is_paginated and person_page_object %}
+            {% if person_page_object.has_previous %}
+                <a href="{% url_qs_filter 1 'page' request.GET.urlencode %}">First</a>
+                <a href="{% url_qs_filter person_page_object.previuos_page_number 'page' request.GET.urlencode %}"><<<</a>
+            {% endif %}
+
+            {% for num in person_page_object.paginator.page_range %}
+                {% if person_page_object.number == num %}
+                    <a>{{ num }}</a>
+                {% elif num > person_page_object.number|add:'-3' and num < person_page_object.number|add:'3' %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if person_page_object.has_next %}
+                <a href="{% url_qs_filter person_page_object.next_page_number 'page' request.GET.urlencode %}">>>></a>
+                <a href="{% url_qs_filter person_page_object.paginator.num_pages 'page' request.GET.urlencode %}">Last</a>
+            {% endif %}
+        {% endif %}
+    {% else %}
+        <footer class="py-5 bg-white">
+            <div class="container">
+               {% if user.is_authenticated %}
+                    <a class="navbar-brand">Нет откликов</a>
+               {% endif %}
+            </div>
+        </footer>
+    {% endif %}
+{% endblock adcontent %}
+
+{% block comments %}
+{% endblock comments %}
+
+{% block sidewidgets %}
+    <!-- Side widgets-->
+    <div class="col-lg-4">
+        <!-- Search widget-->
+        <div class="card mb-4">
+            <div class="card-header">Поиск</div>
+            <div class="card-body">
+                <div class="input-group">
+                    <form method="GET">
+                        {{ filter.form }}
+                        <input type="submit" value="Найти">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Categories widget-->
+        <div class="card mb-4">
+            <div class="card-header">Категори</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <ul class="list-unstyled mb-0">
+                            <li><a href="#!">Веб дизайн</a></li>
+                            <li><a href="#!">HTML</a></li>
+                            <li><a href="#!">Халява</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6">
+                        <ul class="list-unstyled mb-0">
+                            <li><a href="#!">JavaScript</a></li>
+                            <li><a href="#!">CSS</a></li>
+                            <li><a href="#!">Учебные пособия</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Side widget-->
+        <div class="card mb-4">
+            <div class="card-header">Боковой виджет (дополнительный)</div>
+            <div class="card-body">Вы можете поместить все, что захотите, внутрь этих боковых виджетов. Они просты в использовании и оснащены компонентом Bootstrap 5 card!</div>
+        </div>
+    </div>
+{% endblock sidewidgets %}

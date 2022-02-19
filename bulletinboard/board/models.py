@@ -76,6 +76,8 @@ class RespOnAd(models.Model):
     def __str__(self):
         return f'{self.text_response[:15]}'
 
+    # def __
+
     def get_absolute_url(self):
         return f'/responad_detail/{self.id}'
 

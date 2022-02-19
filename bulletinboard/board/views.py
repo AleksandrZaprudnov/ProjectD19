@@ -14,7 +14,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import User as UserDjango
 from .models import User, Ad, RespOnAd
 from .forms import AdModelCreateForm, AdModelUpdateForm, RespOnAdModelCreateForm, AdResponseForm
-from .tasks import send_mail
+from .filters import NewsFilterByAd
 from bulletinboard.functions import get_env
 
 
@@ -60,7 +60,7 @@ class AdDetailView(DetailView):
     context_object_name = 'ad'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(AdDetailView, self).get_context_data()
         ad = context['ad']
 
         # Если автор объявления, тогда видит все отклики
@@ -117,7 +117,7 @@ class AdResponseFormView(SingleObjectMixin, FormView):
         email_hu = get_env('EMAIL_HOST_USER')
         subject = f'Объявление "{str(resp.ad)[:30]}", отклик в {datetime.utcnow().strftime("%d/%m/%y %H:%M")}'
 
-        send_mail.apply_async([email_hu, email_list, subject, html_content])
+        # send_mail.apply_async([email_hu, email_list, subject, html_content])
         # send_mail(email_hu, email_list, subject, html_content)
 
         return super().post(request, *args, **kwargs)
@@ -190,7 +190,7 @@ class RespOnAdDetailView(DetailView):
         email_hu = get_env('EMAIL_HOST_USER')
         subject = f'Принят отклик к объявлению "{str(self.object.ad)[:30]}", в {datetime.utcnow().strftime("%d/%m/%y %H:%M")}'
 
-        send_mail.apply_async([email_hu, email_list, subject, html_content])
+        # send_mail.apply_async([email_hu, email_list, subject, html_content])
         # send_mail(email_hu, email_list, subject, html_content)
 
         return super().get(request, *args, **kwargs)
@@ -215,4 +215,48 @@ class RespOnAdDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse('ad_update', kwargs={'pk': self.object.ad.id})
+
+
+class RespOnAdListView(ListView):
+    template_name = 'board/responad_list.html'
+    model = RespOnAd
+    context_object_name = 'resps'
+    ordering = '-datetime_created'
+    paginate_by = 1
+
+    def get_queryset(self, **kwargs):
+
+        if not self.request.user.is_authenticated:
+            qs = RespOnAd.objects.none()
+        else:
+            user = User.objects.get(user_django=self.request.user)
+            qs = RespOnAd.objects.filter(ad__user__id=user.pk)
+
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super(RespOnAdListView, self).get_context_data()
+
+        filtered = NewsFilterByAd(self.request.GET, request=self.get_queryset())
+
+        if self.request.user.is_authenticated:
+            user = User.objects.get(user_django=self.request.user)
+            ad_qs = Ad.objects.filter(user=user)
+            filtered.qs.filter(ad__in=ad_qs)
+
+        context['filter'] = filtered
+
+        person_page_object = None
+        if filtered.qs.count():
+            # pass
+            paginated_filtered_persons = Paginator(filtered.qs, self.paginate_by)
+            page_number = self.request.GET.get('page')
+            person_page_object = paginated_filtered_persons.get_page(page_number)
+
+        context['person_page_object'] = person_page_object
+        # context['signed'] = self.signed
+
+        return context
+
+
 

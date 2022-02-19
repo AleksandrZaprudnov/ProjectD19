@@ -8,6 +8,7 @@ class AdModelCreateForm(ModelForm):
     title = forms.CharField(label='Заголовок')
     categories = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), label='Категории', widget=forms.SelectMultiple)
     text_article = forms.CharField(max_length=500, label='Содержание', widget=forms.Textarea)
+    media_content = forms.FileField(label='Главное фото')
 
     class Meta:
         model = Ad
@@ -31,6 +32,7 @@ class AdModelUpdateForm(ModelForm):
     title = forms.CharField(label='Заголовок')
     categories = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), label='Категории', widget=forms.SelectMultiple)
     text_article = forms.CharField(max_length=500, label='Содержание', widget=forms.Textarea)
+    media_content = forms.FileField(label='Главное фото')
 
     class Meta:
         model = Ad
