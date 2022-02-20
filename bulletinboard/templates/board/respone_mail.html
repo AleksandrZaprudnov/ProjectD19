@@ -16,7 +16,9 @@
     </section>
     <section class="mb-5">
         <p class="fs-5 mb-4">Письмо сформировано автоматически, не отвечайте на него.</p>
-        <p class="fs-5 mb-4">Контакты для дальнейшего обсуждения:</p>
-        <p class="fs-5 mb-4">{{ text_contacts }}</p>
+        {% if not mailing %}
+            <p class="fs-5 mb-4">Контакты для дальнейшего обсуждения:</p>
+            <p class="fs-5 mb-4">{{ text_contacts }}</p>
+        {% endif %}
     </section>
 </html>

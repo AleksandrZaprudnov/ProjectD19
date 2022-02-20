@@ -145,7 +145,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIR = [
-    BASE_DIR/'static'
+    BASE_DIR/'static',
 ]
 
 # Default primary key field type
@@ -203,3 +203,5 @@ CELERY_RESULT_SERIALIZER = 'json'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# в корневом url прописать urlpatterns +=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

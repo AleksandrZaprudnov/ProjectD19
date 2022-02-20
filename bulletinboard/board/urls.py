@@ -1,6 +1,7 @@
-from django.urls import path, include
-from .views import HomePageView, AdCreateView, AdUpdateView, AdDetailView,  AdListView,\
-    RespOnAdCreateView, RespOnAdDetailView, RespOnAdListView, RespOnAdDeleteView, AdView
+from django.urls import path
+from .views import HomePageView, AdCreateView, AdUpdateView,  AdListView,\
+    RespOnAdCreateView, RespOnAdDetailView, RespOnAdListView, RespOnAdDeleteView,\
+    AdView, MediaContentCreateView
 
 
 urlpatterns = [
@@ -14,5 +15,6 @@ urlpatterns = [
     path('responad_create/', RespOnAdCreateView.as_view(), name='responad_create'),
     path('responad_detail/<int:pk>', RespOnAdDetailView.as_view(), name='responad_detail'),
     path('responad_delete/<int:pk>', RespOnAdDeleteView.as_view(), name='responad_delete'),
+    path('mediacontent_create/', MediaContentCreateView.as_view(), name='mediacontent_create'),
 ]
 

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Ad, Category, User, RespOnAd
+from .models import Ad, Category, User, RespOnAd, MediaContent
 
 
 class AdModelCreateForm(ModelForm):
@@ -8,13 +8,12 @@ class AdModelCreateForm(ModelForm):
     title = forms.CharField(label='Заголовок')
     categories = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), label='Категории', widget=forms.SelectMultiple)
     text_article = forms.CharField(max_length=500, label='Содержание', widget=forms.Textarea)
-    media_content = forms.FileField(label='Главное фото')
 
     class Meta:
         model = Ad
         fields = '__all__'
         exclude = [
-            'user',
+            'user', 'media_content',
         ]
 
     # Переопределяем инициализацию
@@ -32,7 +31,7 @@ class AdModelUpdateForm(ModelForm):
     title = forms.CharField(label='Заголовок')
     categories = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), label='Категории', widget=forms.SelectMultiple)
     text_article = forms.CharField(max_length=500, label='Содержание', widget=forms.Textarea)
-    media_content = forms.FileField(label='Главное фото')
+    link_home_page = forms.CharField(max_length=255, label='Ссылка на файл главной страницы')
 
     class Meta:
         model = Ad
@@ -71,4 +70,23 @@ class RespOnAdModelDetailForm(ModelForm):
     class Meta:
         model = RespOnAd
         fields = '__all__'
+
+
+class MediaContentModelCreateForm(ModelForm):
+
+    class Meta:
+        model = MediaContent
+        fields = '__all__'
+        exclude = [
+            'name_file',
+        ]
+
+    # Переопределяем инициализацию
+    def __init__(self, name_file, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.name_file = name_file
+
+    def save(self, commit=True):
+        self.instance.name_file = self.name_file + '_ad_' + str(self.instance.ad.pk)
+        return super(MediaContentModelCreateForm, self).save(commit=commit)
 

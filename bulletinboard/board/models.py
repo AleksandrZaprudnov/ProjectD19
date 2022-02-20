@@ -1,7 +1,6 @@
-import requests
 from django.db import models
 from django.contrib.auth.models import User as UserDjango
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
@@ -53,7 +52,7 @@ class Category(models.Model):
 
 class MediaContent(models.Model):
     ad = models.ForeignKey("Ad", on_delete=models.CASCADE, related_name="files")
-    name_file = models.CharField(max_length=20, unique=True, null=False)
+    name_file = models.CharField(max_length=30, unique=True, null=False)
     link_file = models.FileField(upload_to='media')
 
     def __str__(self):
@@ -102,6 +101,7 @@ class Ad(models.Model):
     categories = models.ManyToManyField("Category", through="AdCategory")
     title = models.CharField(max_length=255, null=False)
     text_article = models.TextField(null=False)
+    link_home_page = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return f'{self.title}'

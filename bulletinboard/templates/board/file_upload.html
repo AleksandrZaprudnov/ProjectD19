@@ -11,15 +11,11 @@
     <!-- Ad content-->
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="file" name="myfile">
+        {{ form.as_p }}
         <button type="submit">Загрузить</button>
     </form>
 
-    {% if uploaded_file_url %}
-        <p>Файл загружен: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
-    {% endif %}
-
-    <p><a href="{% url 'board' %}">Доска</a></p>
+    <p><a href="/board/">Доска</a></p>
 </article>
 {% endblock adcontent %}
 

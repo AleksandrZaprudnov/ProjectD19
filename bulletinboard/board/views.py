@@ -1,21 +1,23 @@
 from datetime import datetime
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+
 from django.template.loader import render_to_string
+from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator
-from django.core.mail import EmailMultiAlternatives
 from django.views import View
 from django.http import HttpResponseForbidden
 from django.urls import reverse
 from django.views.generic import FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import TemplateView, CreateView, UpdateView, DetailView, DeleteView, ListView
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import User as UserDjango
-from .models import User, Ad, RespOnAd
-from .forms import AdModelCreateForm, AdModelUpdateForm, RespOnAdModelCreateForm, AdResponseForm
-from .filters import NewsFilterByAd
+
 from bulletinboard.functions import get_env
+
+from .models import User, Ad, RespOnAd
+from .forms import AdModelCreateForm, AdModelUpdateForm, AdResponseForm, \
+    RespOnAdModelCreateForm, MediaContentModelCreateForm
+from .filters import NewsFilterByAd
+from .tasks import send_mail
 
 
 # Главная страница
@@ -31,6 +33,7 @@ class AdCreateView(CreateView):
     def get_form_kwargs(self):
         kwargs = super(AdCreateView, self).get_form_kwargs()
         kwargs['user'] = self.request.user
+
         return kwargs
 
 
@@ -117,7 +120,7 @@ class AdResponseFormView(SingleObjectMixin, FormView):
         email_hu = get_env('EMAIL_HOST_USER')
         subject = f'Объявление "{str(resp.ad)[:30]}", отклик в {datetime.utcnow().strftime("%d/%m/%y %H:%M")}'
 
-        # send_mail.apply_async([email_hu, email_list, subject, html_content])
+        send_mail.apply_async([email_hu, email_list, subject, html_content])
         # send_mail(email_hu, email_list, subject, html_content)
 
         return super().post(request, *args, **kwargs)
@@ -190,7 +193,7 @@ class RespOnAdDetailView(DetailView):
         email_hu = get_env('EMAIL_HOST_USER')
         subject = f'Принят отклик к объявлению "{str(self.object.ad)[:30]}", в {datetime.utcnow().strftime("%d/%m/%y %H:%M")}'
 
-        # send_mail.apply_async([email_hu, email_list, subject, html_content])
+        send_mail.apply_async([email_hu, email_list, subject, html_content])
         # send_mail(email_hu, email_list, subject, html_content)
 
         return super().get(request, *args, **kwargs)
@@ -259,4 +262,16 @@ class RespOnAdListView(ListView):
         return context
 
 
+# Добавление файлов
+class MediaContentCreateView(CreateView):
+    template_name = 'board/file_upload.html'
+    form_class = MediaContentModelCreateForm
+
+    def get_form_kwargs(self):
+        kwargs = super(MediaContentCreateView, self).get_form_kwargs()
+        kwargs['name_file'] = str(self.request.user.pk) + '_mc_' + datetime.utcnow().strftime("%d%m%y%H%M%S")
+        return kwargs
+
+    def get_success_url(self):
+        return reverse('mediacontent_create')
 
